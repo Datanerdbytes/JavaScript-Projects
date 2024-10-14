@@ -4,6 +4,7 @@ Calculator Project
 
 Rock-Paper-Scissors Game Project
 
-![Screenshot 2024-10-14 at 5 24 56 PM](https://github.com/user-attachments/assets/8e9e0b2f-8134-4239-bfbe-27ab157a60d0)
+![Screenshot 2024-10-14 at 5 27 56 PM](https://github.com/user-attachments/assets/10daccae-464f-4bba-8014-bedf2a4ba4c6)
+
 
 
