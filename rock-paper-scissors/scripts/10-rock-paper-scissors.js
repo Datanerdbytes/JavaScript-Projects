@@ -14,7 +14,7 @@ let intervalId;
 function autoPlay() {
 
   if (!isautoPlaying) {
-    intervalId = setInterval(function() {
+    intervalId = setInterval(() => {
       const playerMove = pickComputerMove();
       playGame(playerMove);
       document.querySelector('.js-auto-play-button')
