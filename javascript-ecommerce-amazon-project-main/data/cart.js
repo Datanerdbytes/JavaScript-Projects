@@ -63,9 +63,7 @@ export function calculateCartQuanity() {
   return cartQuantity;
 }
 
-/*
-This function is used in updating cart quantity in checkout page.
-*/
+// This function is used in updating cart quantity in checkout page.
 export function updateQuantity(productId, newQuantity) {
   let matchingItem;
 
