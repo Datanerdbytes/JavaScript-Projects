@@ -11,36 +11,37 @@ export function getProduct(productId) {
 
   return matchingProduct;
 }
-class Product {
- id;
- image;
- name;
- rating;
- priceCents;
 
- constructor(productDetails) {
-  this.id = productDetails.id;
-  this.image = productDetails.image;
-  this.name = productDetails.name;
-  this.rating = productDetails.rating;
-  this.priceCents = productDetails.priceCents;
+ export class Product {
+  id;
+  image;
+  name;
+  rating;
+  priceCents;
+
+  constructor(productDetails) {
+    this.id = productDetails.id;
+    this.image = productDetails.image;
+    this.name = productDetails.name;
+    this.rating = productDetails.rating;
+    this.priceCents = productDetails.priceCents;
  }
 
- getStarsUrl() {
-  return `images/ratings/rating-${this.rating.stars * 10}.png`;
- }
+  getStarsUrl() {
+    return `images/ratings/rating-${this.rating.stars * 10}.png`;
+  }
 
- getPrice() {
-  return `$${formatCurrency(this.priceCents)}`;
- }
+  getPrice() {
+    return `$${formatCurrency(this.priceCents)}`;
+  }
 
- extraInfoHTML() {
-  return '';
- }
+  extraInfoHTML() {
+    return '';
+  }
 
 }
 
-class Clothing extends Product {
+export class Clothing extends Product {
   sizeChartLink;
 
   constructor(productDetails) {
@@ -55,7 +56,7 @@ class Clothing extends Product {
   }
 }
 
-class Appliance extends Product {
+export class Appliance extends Product {
   instructionsLink;
   warrantyLink;
 
