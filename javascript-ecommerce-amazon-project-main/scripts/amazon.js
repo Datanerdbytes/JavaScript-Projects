@@ -1,4 +1,5 @@
-import { cart, addToCart, calculateCartQuanity } from "../data/cart.js";
+// import { cart, addToCart, calculateCartQuanity } from "../data/cart.js";
+import {cart} from '../data/cart-oop.js'
 import { products } from "../data/products.js";
 import {formatCurrency} from './utils/money.js'
 
@@ -65,7 +66,7 @@ document.querySelector('.js-products-grid')
   .innerHTML = productsHMTL;
 
 function updateCartQuantity() {
-  const cartQuantity = calculateCartQuanity();
+  const cartQuantity = cart.calculateCartQuanity();
 
   document.querySelector('.js-cart-quantity')
   .innerHTML = cartQuantity || '';
@@ -84,7 +85,7 @@ document.querySelectorAll('.js-add-to-cart')
       );
       const quantity = Number(quantitySelector.value);
 
-      addToCart(productId, quantity);
+      cart.addToCart(productId, quantity);
       updateCartQuantity();
 
     const addedMessage = document.querySelector(
