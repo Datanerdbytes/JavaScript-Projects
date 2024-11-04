@@ -1,0 +1,81 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.calculator {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+#display {
+  /* Remove width: 100% */
+  box-sizing: border-box; /* Add this */
+  width: calc(100% - 2px); /* Add this instead of width: 100% */
+  height: 50px;
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 1.5rem;
+  text-align: right;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  box-sizing: border-box; /* Add this */
+}
+
+.btn {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 20px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #e0e0e0;
+}
+
+#clear, #backspace, #sqrt, #factorial {
+  background-color: #ff6b6b;
+  color: #fff;
+}
+
+#clear:hover, #backspace:hover, #sqrt:hover, #factorial:hover {
+  background-color: #e55f5f;
+}
+
+#divide, #multiply, #subtract, #add, #equals {
+  background-color: #007bff;
+  color: #fff;
+}
+
+#divide:hover, #multiply:hover, #subtract:hover, #add:hover, #equals:hover {
+  background-color: #0056b3;
+}
+
+#decimal, #zero, #one, #two, #three, #four, #five, #six, #seven, #eight, #nine {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+#decimal:hover, #zero:hover, #one:hover, #two:hover, #three:hover, #four:hover, #five:hover, #six:hover, #seven:hover, #eight:hover, #nine:hover {
+  background-color: #d4d4d4;
+}
