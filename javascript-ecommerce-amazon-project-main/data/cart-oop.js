@@ -62,6 +62,18 @@ class Cart {
     this.saveToStorage();
   }
 
+  resetCart() {
+    try {
+      this.cartItems = [];
+      this.saveToStorage();
+      return true;
+
+    } catch (error) {
+      console.error('Failed to reset cart:', error);
+      return false;
+    }
+  }
+
  updateDeliveryOption(productId, deliveryOptionId) {
     let matchingItem;
   
