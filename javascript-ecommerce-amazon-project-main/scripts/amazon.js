@@ -102,7 +102,7 @@ function renderProductsGrid() {
 
       const timeoutId = setTimeout(() => {
         addedMessage.classList.remove('added-to-cart-visible');
-      }, 2000);
+      }, 1000);
     
       addedMessageTimeoutId = timeoutId
 

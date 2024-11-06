@@ -2,6 +2,7 @@ import {getProduct, loadProductsFetch} from '../data/products.js';
 import {orders} from '../data/orders.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {formatCurrency} from './utils/money.js';
+import {addToCart} from '../data/cart.js';
 
 async function loadPage() {
   await loadProductsFetch();
@@ -58,7 +59,9 @@ async function loadPage() {
           <div class="product-quantity">
             Quantity: ${productDetails.quantity}
           </div>
-          <button class="buy-again-button button-primary">
+          <button class="buy-again-button button-primary js-buy-again"
+            data-product-id="${product.id}
+            data-quantity="${productDetails.quantity}">
             <img class="buy-again-icon" src="images/icons/buy-again.png">
             <span class="buy-again-message">Buy it again</span>
           </button>
@@ -76,6 +79,32 @@ async function loadPage() {
     return productsListHTML;
   }
   document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
+
+  const ADDED_MESSAGE_DURATION = 1000;
+
+  document.querySelectorAll('.js-buy-again')
+    .forEach((button) => {
+      let addedMessageTimeoutId;
+
+      button.addEventListener('click', () => {
+        const productId = button.dataset.productId;
+        const quantity = Number(button.dataset.quantity);
+
+        addToCart(productId, quantity);
+
+        button.innerHTML = 'Added';
+
+       clearTimeout(addedMessageTimeoutId);
+
+        addedMessageTimeoutId = setTimeout(() => {
+          button.innerHTML = `
+          <img class="buy-again-icon" src="images/icons/buy-again.png">
+          <span class="buy-again-message">Buy it again</span>
+        `;
+        }, ADDED_MESSAGE_DURATION);
+      });
+    });
+   
 }
 
 loadPage();
