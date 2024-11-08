@@ -2,7 +2,8 @@ import {getProduct, loadProductsFetch} from '../data/products.js';
 import {orders} from '../data/orders.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {formatCurrency} from './utils/money.js';
-import {addToCart} from '../data/cart.js';
+import {cart} from '../data/cart-oop.js';
+import {renderCheckoutHeader} from './checkout/checkoutHeader.js';
 
 async function loadPage() {
   await loadProductsFetch();
@@ -60,7 +61,7 @@ async function loadPage() {
             Quantity: ${productDetails.quantity}
           </div>
           <button class="buy-again-button button-primary js-buy-again"
-            data-product-id="${product.id}
+            data-product-id="${product.id}"
             data-quantity="${productDetails.quantity}">
             <img class="buy-again-icon" src="images/icons/buy-again.png">
             <span class="buy-again-message">Buy it again</span>
@@ -80,6 +81,16 @@ async function loadPage() {
   }
   document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
 
+  function renderCheckoutHeaderIfReady() {
+    const checkoutHeaderElement = document.querySelector('.js-checkout-header');
+    if (checkoutHeaderElement) {
+      renderCheckoutHeader();
+    } else {
+
+      setTimeout(renderCheckoutHeaderIfReady, 50);
+    }
+  }
+
   const ADDED_MESSAGE_DURATION = 1000;
 
   document.querySelectorAll('.js-buy-again')
@@ -88,9 +99,15 @@ async function loadPage() {
 
       button.addEventListener('click', () => {
         const productId = button.dataset.productId;
-        const quantity = Number(button.dataset.quantity);
+        const orderQuantity = Number(button.dataset.quantity);
 
-        addToCart(productId, quantity);
+        cart.addToCart(productId, orderQuantity);
+
+        renderCheckoutHeaderIfReady();
+
+        const product = getProduct(productId);
+        showNotification(`Added ${orderQuantity} ${product.name} to cart`);
+    
 
         button.innerHTML = 'Added';
 
@@ -104,7 +121,21 @@ async function loadPage() {
         }, ADDED_MESSAGE_DURATION);
       });
     });
-   
+
+  function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.innerHTML = `
+      ${message}
+      <a href="checkout.html" class="view-cart-link">View Cart</a>
+    `;
+  
+    document.body.appendChild(notification);
+  
+    setTimeout(() => {
+      notification.remove();
+    }, 3000); 
+  }
 }
 
 loadPage();

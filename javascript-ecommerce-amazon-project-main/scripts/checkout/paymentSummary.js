@@ -4,6 +4,8 @@ import {getProduct} from '../../data/products.js';
 import {getDeliveryOption} from '../../data/deliveryOptions.js';
 import {formatCurrency} from '../utils/money.js';
 import {addOrder} from '../../data/orders.js';
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+
 
 export function renderPaymentSummary() {
   let productPriceCents = 0;
@@ -82,15 +84,49 @@ export function renderPaymentSummary() {
             cart: cart
           })
         });
-  
+
         const order = await response.json();
+
+        const orderTime = dayjs(order.orderTime);
+
+        order.products = order.products.map(product => {
+          const cartItem = cart.cartItems.find(item => item.productId === product.productId);
+
+          if (cartItem) {
+            const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
+
+            let remainingDays = deliveryOption.deliveryDays;
+            let deliveryDate = orderTime;
+
+            while (remainingDays > 0) {
+              deliveryDate = deliveryDate.add(1, 'day');
+              // Skip weekends
+              if (deliveryDate.day() !== 0 && deliveryDate.day() !== 6) {
+                remainingDays--;
+              }
+            }
+
+            return {
+              ...product,
+              estimatedDeliveryTime: deliveryDate.format()
+            };
+
+          }
+
+          return product;
+
+        });
+ 
         addOrder(order);
+
+        if (cart.resetCart()) {
+          window.location.href = 'orders.html'
+        } else {
+          console.error('Failed to reset cart');
+        }
 
       } catch (error) {
         console.log('Unexpected error. Please try again later.')
       }
-
-      window.location.href = 'orders.html';
-      cart.resetCart();  
-    })
+    });
 }
